@@ -15,7 +15,8 @@
     VNC_USERNAME: lab-user
     NOVNC_PASSWORD: redhat
     USERNAME_GROUP: users
-
+    NOVNC_IP_ADDRESS_FILE: /home/{{ VNC_USERNAME }}/external_ip
+    
   tasks:
 
   - name: Make sure the VNC_USERNAME user exists
@@ -142,9 +143,14 @@
       enabled: true
       name: vncserver@:1.service
 
-#  - name: Write novnc URL to a file
-#    copy:
-#      dest: /root/Podman-Desktop-Workshop/novnc_url
-#      content: |
-#        Your desktop interface can be reached at https://{{ TARGETHOST.stdout }}/vnc.html?host={{ TARGETHOST.stdout }}&port=443
-#    delegate_to: localhost
+  - name: Get NOVNC_IP_ADDRESS_FILE
+    ansible.builtin.command: cat {{ NOVNC_IP_ADDRESS_FILE }}
+    register: NOVNC_IP_ADDRESS
+    # Referenced as NOVNC_IP_ADDRESS_PASSWORD.stdout
+
+  - name: Write novnc URL to a file
+    copy: 
+      dest: "/home/{{ VNC_USERNAME }}/novnc_url.html"
+      content: |
+        Your desktop interface can be reached at https://{{ NOVNC_IP_ADDRESS.stdout }}/vnc.html?host={{ NOVNC_IP_ADDRESS.stdout }}&port=443
+    delegate_to: localhost
