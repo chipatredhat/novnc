@@ -4,7 +4,7 @@
   become: yes
   gather_facts: yes
   connection: local
-  collections:
+  collections: # ansible-galaxy collection install community.crypto ansible.posix community.general
     - community.crypto.x509_certificate
     - ansible.posix
     - community.general
