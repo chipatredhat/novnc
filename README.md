@@ -8,5 +8,5 @@ cd novnc/ansible && ansible-playbook install_novnc_and_tigervnc-server.yml
 ~~~
 OR:
 ~~~
-curl https://raw.githubusercontent.com/chipatredhat/novnc/refs/heads/main/install_novnc.sh | bash
+curl -s https://raw.githubusercontent.com/chipatredhat/novnc/refs/heads/main/install_novnc.sh | bash
 ~~~
